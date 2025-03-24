@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Growth Icebreaker Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="flex flex-col items-center p-8 max-w-4xl mx-auto min-h-screen">
+        <h1 class="text-3xl font-bold text-green-800 mb-2">The AI Growth Icebreaker Generator</h1>
+        
+        <p class="text-lg mb-6 text-center italic text-black">
+            We like to start our AI Growth meetings with an IceBreaker for two reasons:
+            <br>1. It gets everyone talking up front. So if you speak at the top of the meeting you are more likely to speak throughout.
+            <br>2. We are people first and worker bees second. So it's important to get to know a little bit about each other as people.
+        </p>
+        
+        <div class="flex flex-wrap gap-4 mb-8">
+            <button id="generateBtn" class="bg-green-800 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-xl shadow-lg transition-colors duration-300">
+                Generate Icebreakers
+            </button>
+            
+            <button id="resetViewBtn" class="hidden bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg text-xl shadow-lg transition-colors duration-300">
+                Reset View
+            </button>
+            
+            <button id="resetDataBtn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg text-xl shadow-lg transition-colors duration-300">
+                Reset All Data
+            </button>
+        </div>
+        
+        <div id="resultsContainer" class="w-full hidden">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-semibold mb-4 text-green-800">Suggested Icebreakers:</h2>
+                <ul id="icebreakersContainer" class="space-y-3">
+                    <!-- Icebreakers will be inserted here -->
+                </ul>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-green-800">Today's Icebreaker Hosts:</h2>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="bg-gray-100 p-4 rounded-md flex-1">
+                        <h3 class="font-semibold text-lg text-green-800">Primary Host:</h3>
+                        <p id="primaryHost" class="text-xl mt-2"></p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-md flex-1">
+                        <h3 class="font-semibold text-lg text-green-800">Backup Host:</h3>
+                        <p id="backupHost" class="text-xl mt-2"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8">
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-4">
+                <p id="statsInfo" class="text-sm text-gray-500">Used icebreakers: 0 | Available: 100</p>
+                
+                <button id="viewUsedBtn" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-black rounded text-sm font-medium transition-colors duration-300">
+                    View Used Icebreakers
+                </button>
+                
+                <button id="reviewAllBtn" class="px-3 py-1 bg-green-100 hover:bg-green-200 text-green-800 rounded text-sm font-medium transition-colors duration-300">
+                    Review All Icebreakers
+                </button>
+                
+                <button id="editTeamBtn" class="px-3 py-1 bg-green-100 hover:bg-green-200 text-green-800 rounded text-sm font-medium transition-colors duration-300">
+                    Edit Team Members
+                </button>
+            </div>
+            
+            <!-- Used Icebreakers Section -->
+            <div id="usedIcebreakersSection" class="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-6 hidden">
+                <h3 class="font-semibold text-lg text-green-800 mb-3">Previously Used Icebreakers:</h3>
+                <ul id="usedIcebreakersContainer" class="max-h-60 overflow-y-auto">
+                    <!-- Used icebreakers will be inserted here -->
+                </ul>
+            </div>
+            
+            <!-- Review All Icebreakers Section -->
+            <div id="allIcebreakersSection" class="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-6 hidden">
+                <h3 class="font-semibold text-lg text-green-800 mb-3">All Available Icebreakers:</h3>
+                <p class="text-sm text-gray-500 mb-3">Click on any icebreaker to mark it as previously used.</p>
+                <div class="max-h-96 overflow-y-auto">
+                    <ul id="allIcebreakersContainer" class="space-y-1">
+                        <!-- All icebreakers will be inserted here -->
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Edit Team Members Section -->
+            <div id="teamMembersSection" class="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-6 hidden">
+                <h3 class="font-semibold text-lg text-green-800 mb-3">Edit Team Members:</h3>
+                <div class="flex mb-4">
+                    <input
+                        id="newTeamMember"
+                        type="text"
+                        placeholder="Add new team member"
+                        class="flex-1 border border-gray-300 rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                    <button
+                        id="addTeamMemberBtn"
+                        class="bg-green-800 hover:bg-green-700 text-white px-4 py-2 rounded-r"
+                    >
+                        Add
+                    </button>
+                </div>
+                <div class="max-h-60 overflow-y-auto">
+                    <ul id="teamMembersContainer" class="space-y-1">
+                        <!-- Team members will be inserted here -->
+                    </ul>
+                </div>
+                <p id="teamMemberWarning" class="text-sm text-red-500 mt-2 hidden">You need at least 2 team members for the generator to work properly.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
