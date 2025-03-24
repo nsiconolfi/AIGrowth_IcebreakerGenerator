@@ -1,0 +1,13 @@
+/* Additional custom styles can go here */
+.icebreaker-item {
+    transition: all 0.2s ease;
+}
+
+.icebreaker-item:hover {
+    transform: translateX(2px);
+}
+
+.icebreaker-selected {
+    background-color: rgba(24, 199, 111, 0.2);
+    border: 2px solid #18c76f;
+}
